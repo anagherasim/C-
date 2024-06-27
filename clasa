@@ -1,0 +1,104 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace ex1
+{
+    public abstract class Locuinta
+    {
+        int numar;
+        String pozitie;
+        String amprentaLaSol;
+
+        public Locuinta(int numar, string pozitie, string amprentaLaSol)
+        {
+            this.numar = numar;
+            this.pozitie = pozitie;
+            this.amprentaLaSol = amprentaLaSol;
+        }
+
+        public abstract void afiseaza();
+        public abstract void deseneaza();
+
+    }
+    public class Bloc : Locuinta
+    {
+        int numarEtaje;
+        public Bloc(int numar, String pozitie, String amprentaLaSol, int numarEtaje) : base(numar, pozitie, amprentaLaSol)
+        {
+            this.numarEtaje = numarEtaje;
+        }
+        public override void afiseaza()
+        {
+
+        }
+        public override void deseneaza()
+        {
+
+        }
+    }
+    public class Casa : Locuinta
+    {
+        int tip;
+        public Casa(int numar, String pozitie,String amprentaLaSol,int tip):base(numar,pozitie,amprentaLaSol)
+        {
+            this.tip = tip;
+        }
+        public override void afiseaza()
+        {
+
+        }
+        public override void deseneaza()
+        {
+
+        }
+    }
+
+    public class Manager
+    {
+        public List<Bloc> bloc;
+        public List<Casa> casa;
+        public void preiadate()
+        {
+            casa.Clear();
+            bloc.Clear();
+            string filePath = "D:\\poo\\ex1\\bin\\Debug\\locuinte.txt";
+            string[] lines = File.ReadAllLines(filePath);
+
+            foreach (string line in lines)
+            {
+                if (line.StartsWith("bloc"))
+                {
+                    string[] parts = line.Split('/');
+                    if (parts.Length > 0)
+                    {
+                        int numar = int.Parse(parts[1]);
+                        String pozitie = parts[2];
+                        String amprentaLaSol = parts[3];
+                        int numarEtaje = int.Parse(parts[4]);
+
+                        Bloc bloc = new Bloc(numar, pozitie, amprentaLaSol, numarEtaje);
+                    }
+                }
+                else
+                {
+                    string[] parts = line.Split('/');
+                    if (parts.Length > 0)
+                    {
+                        int numar = int.Parse(parts[1]);
+                        String pozitie = parts[2];
+                        String amprentaLaSol = parts[3];
+                        int tip = int.Parse(parts[4]);
+
+                        Casa bcasa = new Casa(numar, pozitie, amprentaLaSol, tip);
+                    }
+                }
+            }
+        }
+    }
+
+}
+
